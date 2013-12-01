@@ -37,11 +37,11 @@ public class GetInfoBattery extends GetInfoAbstract {
 
 	public float getBatteryTemp(){
 		if(batteryIntent == null){
-			return -300;
+			return -273.15f;
 		}
 
 		//As return value seems to be in integer form *10
-		float temp = (float) batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -3000);
+		float temp = (float) batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -2732);
 
 		temp *= 0.1;
 		return temp;
