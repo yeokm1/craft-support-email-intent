@@ -34,16 +34,16 @@ public class CraftIntentEmail {
 
 	
 
-	public CraftIntentEmail(Context context){
+	public CraftIntentEmail(){
 	}
 
 
-	public CraftIntentEmail(Context context, String recipientTo, String subject) throws IllegalArgumentException{
+	public CraftIntentEmail(String recipientTo, String subject) throws IllegalArgumentException{
 		this.addRecipientTo(recipientTo);
 		this.replaceSubject(subject);
 	}
 
-	public CraftIntentEmail(Context context, String recipientTo, String subject, String content) throws IllegalArgumentException{
+	public CraftIntentEmail(String recipientTo, String subject, String content) throws IllegalArgumentException{
 		this.replaceContent(content);
 	}
 	

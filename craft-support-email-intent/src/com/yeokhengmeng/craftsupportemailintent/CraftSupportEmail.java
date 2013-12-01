@@ -13,18 +13,19 @@ public class CraftSupportEmail extends CraftIntentEmail {
 
 
 	public CraftSupportEmail(Context context){
-		super(context);
 		this.context = context;
 		initAllGetInfos(context);
 	}
 
 	public CraftSupportEmail(Context context, String recipient, String subject) {
-		super(context, recipient, subject);
+		super(recipient, subject);
+		this.context = context;
 		initAllGetInfos(context);
 	}
 
 	public CraftSupportEmail(Context context, String recipient, String subject, String content) {
-		super(context, recipient, subject, content);
+		super(recipient, subject, content);
+		this.context = context;
 		initAllGetInfos(context);
 	}
 
