@@ -178,11 +178,13 @@ public class GetInfoWifi extends GetInfoAbstract{
 		String phoneDetails = "<<Wifi>>\n";
 
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Access Wifi State Permission: " + checkPermission(PERMISSION_ACCESS_WIFI_STATE));
-		details.add("Exists: " + isWifiSupported());
-		details.add("Status: " + getWifiStatus());
-
+		try{
+			details.add("Access Wifi State Permission: " + checkPermission(PERMISSION_ACCESS_WIFI_STATE));
+			details.add("Exists: " + isWifiSupported());
+			details.add("Status: " + getWifiStatus());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
@@ -195,14 +197,16 @@ public class GetInfoWifi extends GetInfoAbstract{
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
-
-		details.add("Mac address: " + getWifiAdapterMac());
-		details.add("IP address: " + getConnectedIP());
-		details.add("AP SSID: " + getConnectedSSID());
-		details.add("AP address: " + getConnectedMac());
-		details.add("Speed: " + getConnectedSpeed());
-		details.add("RSSI: " + getConnectedRSSI());
-
+		try{
+			details.add("Mac address: " + getWifiAdapterMac());
+			details.add("IP address: " + getConnectedIP());
+			details.add("AP SSID: " + getConnectedSSID());
+			details.add("AP address: " + getConnectedMac());
+			details.add("Speed: " + getConnectedSpeed());
+			details.add("RSSI: " + getConnectedRSSI());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 
 		for(String detail : details){
 			phoneDetails += detail + "\n";

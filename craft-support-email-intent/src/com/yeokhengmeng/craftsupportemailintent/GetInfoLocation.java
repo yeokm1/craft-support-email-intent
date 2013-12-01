@@ -15,10 +15,10 @@ import android.location.LocationManager;
 import android.os.Build;
 
 public class GetInfoLocation extends GetInfoAbstract {
-	
-	
+
+
 	public static final String PERMISSION_ACCESS_FINE_LOCATION = permission.ACCESS_FINE_LOCATION;
-	
+
 	private LocationManager locMgr;
 
 	public GetInfoLocation(Context context) {
@@ -27,7 +27,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			locMgr =  (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		}
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public boolean doesGPSExist(){
 		if(getVersion() >= android.os.Build.VERSION_CODES.FROYO){
@@ -39,7 +39,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return allProviders.contains(LocationManager.GPS_PROVIDER);
 		}
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public boolean doesNetworkExist(){
 		if(getVersion() >= android.os.Build.VERSION_CODES.FROYO){
@@ -51,7 +51,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return allProviders.contains(LocationManager.NETWORK_PROVIDER);
 		}
 	}
-	
+
 	public boolean isGPSEnabled(){
 		if(locMgr == null){
 			return false;
@@ -59,7 +59,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		}
 	}
-	
+
 
 	public boolean isNetworkEnabled(){
 		if(locMgr == null){
@@ -68,7 +68,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return locMgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 		}
 	}
-	
+
 	public String getGPSLastLocation(){
 		if(locMgr == null){
 			return UNKNOWN;
@@ -77,7 +77,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return formatLocationString(loc);
 		}
 	}
-	
+
 	public String getNetworkLastLocation(){
 		if(locMgr == null){
 			return UNKNOWN;
@@ -86,8 +86,8 @@ public class GetInfoLocation extends GetInfoAbstract {
 			return formatLocationString(loc);
 		}
 	}
-	
-	
+
+
 	public String formatLocationString(Location loc){
 		if(loc == null){
 			return UNKNOWN;
@@ -98,10 +98,10 @@ public class GetInfoLocation extends GetInfoAbstract {
 		double accuracy = loc.getAccuracy();
 		double speed = loc.getSpeed();
 		long time = loc.getTime();
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm, dd MMM yyyy", Locale.US);
 		String dateFormated = sdf.format(new Date(time));
-		
+
 		return "\nLatitude: " + latitude 
 				+ "\nLongitude: " + longitude 
 				+ "\nAltitude: " + altitude
@@ -109,26 +109,28 @@ public class GetInfoLocation extends GetInfoAbstract {
 				+"\nSpeed: " + speed
 				+"\nTime: " + dateFormated;
 
-		
+
 	}
-	
+
 	@Override
 	public String getBasicDetailsOnly() {
 		String phoneDetails = "<<Location Service>>\n";
-		
+
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Access Fine Location Permission: " + checkPermission(PERMISSION_ACCESS_FINE_LOCATION));
-		details.add("GPS exists: " + doesGPSExist());
-		details.add("Network exists: " + doesNetworkExist());
-		
-		details.add("GPS enabled: " + isGPSEnabled());
-		details.add("Network Enabled: " + isNetworkEnabled());
-		
+		try{
+			details.add("Access Fine Location Permission: " + checkPermission(PERMISSION_ACCESS_FINE_LOCATION));
+			details.add("GPS exists: " + doesGPSExist());
+			details.add("Network exists: " + doesNetworkExist());
+
+			details.add("GPS enabled: " + isGPSEnabled());
+			details.add("Network Enabled: " + isNetworkEnabled());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
 
@@ -137,19 +139,21 @@ public class GetInfoLocation extends GetInfoAbstract {
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Last GPS Location: " + getGPSLastLocation());
-		details.add("Last Network Location: " + getNetworkLastLocation());
-		
+		try{
+			details.add("Last GPS Location: " + getGPSLastLocation());
+			details.add("Last Network Location: " + getNetworkLastLocation());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

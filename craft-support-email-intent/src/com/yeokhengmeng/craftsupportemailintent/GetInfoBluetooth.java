@@ -12,7 +12,7 @@ import android.os.Build;
 public class GetInfoBluetooth extends GetInfoAbstract{
 
 	public static final String PERMISSION_ACCESS_BLUETOOTH_STATE = permission.BLUETOOTH;
-	
+
 	private BluetoothAdapter btAdapter;
 	public GetInfoBluetooth(Context context) {
 		super(context);
@@ -20,8 +20,8 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			btAdapter = BluetoothAdapter.getDefaultAdapter();
 		}
 	}
-	
-	
+
+
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	public boolean isBluetoothSupported(){
@@ -33,7 +33,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			return true;
 		}
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public boolean isBluetoothLowEnergySupported(){
 		if(getVersion() >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
@@ -42,7 +42,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			return false;
 		}
 	}
-	
+
 	public String getBluetoothAdapterName(){
 		if(btAdapter == null){
 			return NO_PERMISSION;
@@ -50,7 +50,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			return btAdapter.getName();
 		}
 	}
-	
+
 	public String getBluetoothAdapterMac(){
 		if(btAdapter == null){
 			return NO_PERMISSION;
@@ -58,7 +58,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			return btAdapter.getAddress();
 		}
 	}
-	
+
 	public boolean isBluetoothEnabled(){
 		if(btAdapter == null){
 			return false;
@@ -66,7 +66,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 			return btAdapter.isEnabled();
 		}
 	}
-	
+
 	public boolean isBluetoothDiscovering(){
 		if(btAdapter == null){
 			return false;
@@ -80,20 +80,22 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 	@Override
 	public String getBasicDetailsOnly() {
 		String phoneDetails = "<<Bluetooth>>\n";
-		
-		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Access Bluetooth State Permission: " + checkPermission(PERMISSION_ACCESS_BLUETOOTH_STATE));
-		details.add("Exists: " + isBluetoothSupported());
-		details.add("BLE: " + isBluetoothLowEnergySupported());
-		details.add("Enabled: " + isBluetoothEnabled());
-		details.add("Discovering: " + isBluetoothDiscovering());
 
-		
+		ArrayList<String> details = new ArrayList<String>();
+		try{
+			details.add("Access Bluetooth State Permission: " + checkPermission(PERMISSION_ACCESS_BLUETOOTH_STATE));
+			details.add("Exists: " + isBluetoothSupported());
+			details.add("BLE: " + isBluetoothLowEnergySupported());
+			details.add("Enabled: " + isBluetoothEnabled());
+			details.add("Discovering: " + isBluetoothDiscovering());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
+
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
 
@@ -102,15 +104,17 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Name: " + getBluetoothAdapterName());
-		details.add("Mac: " + getBluetoothAdapterMac());
-		
-		
+		try{
+			details.add("Name: " + getBluetoothAdapterName());
+			details.add("Mac: " + getBluetoothAdapterMac());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
+
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
 

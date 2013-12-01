@@ -7,25 +7,25 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 
 public class GetInfoCarrier extends GetInfoAbstract {
-	
+
 	public static final String PERMISSION_READ_PHONE_STATE  = permission.READ_PHONE_STATE;
 
-	
+
 	private TelephonyManager teleManager;
-	
-	
+
+
 	public GetInfoCarrier(Context context) {
 		super(context);
 		if(checkPermission(PERMISSION_READ_PHONE_STATE)){
 			teleManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		}
 	}
-	
+
 	public String getDataState(){
 		if(teleManager == null){
 			return NO_PERMISSION;
 		}
-		
+
 		int state = teleManager.getDataState();
 		switch(state){
 		case TelephonyManager.DATA_DISCONNECTED : return "Disconnected";
@@ -34,9 +34,9 @@ public class GetInfoCarrier extends GetInfoAbstract {
 		case TelephonyManager.DATA_SUSPENDED : return "Suspended";
 		default: return UNKNOWN;
 		}
-		
+
 	}
-	
+
 	//Imei
 	public String getDeviceID(){
 		if(teleManager == null){
@@ -50,7 +50,7 @@ public class GetInfoCarrier extends GetInfoAbstract {
 			}
 		}
 	}
-	
+
 	public String getCountryCode(){
 		if(teleManager == null){
 			return NO_PERMISSION;
@@ -63,7 +63,7 @@ public class GetInfoCarrier extends GetInfoAbstract {
 			}
 		}
 	}
-	
+
 	public String getNetworkOperator(){
 		if(teleManager == null){
 			return NO_PERMISSION;
@@ -77,12 +77,12 @@ public class GetInfoCarrier extends GetInfoAbstract {
 			}
 		}
 	}
-	
+
 	public String getPhoneType(){
 		if(teleManager == null){
 			return NO_PERMISSION;
 		}
-		
+
 		int type = teleManager.getPhoneType();
 		switch(type){
 		case TelephonyManager.PHONE_TYPE_CDMA : return "CDMA";
@@ -96,17 +96,19 @@ public class GetInfoCarrier extends GetInfoAbstract {
 	@Override
 	public String getBasicDetailsOnly() {
 		String phoneDetails = "<<Carrier>>\n";
-		
+
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Access Phone State Permission: " + checkPermission(PERMISSION_READ_PHONE_STATE));
-		details.add("Data State: " + getDataState());
-		details.add("Phone Type: " + getPhoneType());
-		
+		try{
+			details.add("Access Phone State Permission: " + checkPermission(PERMISSION_READ_PHONE_STATE));
+			details.add("Data State: " + getDataState());
+			details.add("Phone Type: " + getPhoneType());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
 
@@ -115,20 +117,22 @@ public class GetInfoCarrier extends GetInfoAbstract {
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Network Operator: " + getNetworkOperator());
-		details.add("DeviceID: " + getDeviceID());
-		details.add("Country Code: " + getCountryCode());
-		
+		try{
+			details.add("Network Operator: " + getNetworkOperator());
+			details.add("DeviceID: " + getDeviceID());
+			details.add("Country Code: " + getCountryCode());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
-		
-		
-		
+
+
+
 
 
 }

@@ -65,11 +65,11 @@ public class GetInfoSummary extends GetInfoAbstract {
 	public String getFingerprint(){
 		return android.os.Build.FINGERPRINT;
 	}
-	
+
 	public String getDisplay(){
 		return android.os.Build.DISPLAY;
 	}
-	
+
 	public String getBuildTime(){
 		long date = android.os.Build.TIME;
 		Date dateFormat = new Date(date);
@@ -118,13 +118,13 @@ public class GetInfoSummary extends GetInfoAbstract {
 		} else {
 			radio = UNKNOWN;
 		}
-		
+
 		if(radio == null){
 			return UNKNOWN;
 		} else {
 			return radio;
 		}
-		
+
 	}
 
 	public String getTags(){
@@ -163,36 +163,36 @@ public class GetInfoSummary extends GetInfoAbstract {
 
 		return featureString;
 	}
-	
-	
+
+
 	public boolean isPlayStoreInstalled() {
 
 		String[] packageNames = {"com.google.market","com.google.vending" , "com.android.vending" };
-	    PackageManager packageManager = context.getPackageManager();
-	    List<PackageInfo> packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
-	    for (PackageInfo packageInfo : packages) {
-	    	String currentPackageName = packageInfo.packageName;
-	    	for(String gNames : packageNames){
-	        	if(currentPackageName.equals(gNames)){
-	        		return true;
-	        	}
-	        }
-	    }
+		PackageManager packageManager = context.getPackageManager();
+		List<PackageInfo> packages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+		for (PackageInfo packageInfo : packages) {
+			String currentPackageName = packageInfo.packageName;
+			for(String gNames : packageNames){
+				if(currentPackageName.equals(gNames)){
+					return true;
+				}
+			}
+		}
 
-	    return false;
-	    
-	    
+		return false;
+
+
 	}
-	
+
 	@SuppressWarnings("unused")
 	public boolean isGoogleMapsInstalled(){
-	    try  {
-	        ApplicationInfo info = context.getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0 );
-	        return true;
-	    } 
-	    catch(PackageManager.NameNotFoundException e)  {
-	        return false;
-	    }
+		try  {
+			ApplicationInfo info = context.getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0 );
+			return true;
+		} 
+		catch(PackageManager.NameNotFoundException e)  {
+			return false;
+		}
 	}
 
 
@@ -258,7 +258,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 			return fullResponse;
 		}
 	}
-	
+
 	public String getKernelVersion(){
 		String kernelVersion = System.getProperty("os.version");
 		if(kernelVersion == null){
@@ -268,82 +268,90 @@ public class GetInfoSummary extends GetInfoAbstract {
 		}
 	}
 
-	
+
 	public String getMinimumDetails(){
 		String phoneDetails = "<<Phone Summary>>\n";
-		
 		ArrayList<String> details = new ArrayList<String>();
-		details.add("Manufacturer: " + getManufacturer());
-		details.add("Model: " + getModel());
-		details.add("Product: " + getProduct());
-		details.add("Android Version: " + getVersion());
-		details.add("Version Release: " + getVersionRelease());
-		details.add("Play Store Installed: " + isPlayStoreInstalled());
-		details.add("Google Maps Installed: " + isGoogleMapsInstalled());
-		details.add("Rooted: " + isDeviceRooted());
-		
+		try{
+
+			details.add("Manufacturer: " + getManufacturer());
+			details.add("Model: " + getModel());
+			details.add("Product: " + getProduct());
+			details.add("Android Version: " + getVersion());
+			details.add("Version Release: " + getVersionRelease());
+			details.add("Play Store Installed: " + isPlayStoreInstalled());
+			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
+			details.add("Rooted: " + isDeviceRooted());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
 	}
 
 	@Override
 	public String getBasicDetailsOnly() {
-		
+
 		String phoneDetails = "<<Phone Summary>>\n";
-		
+
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Manufacturer: " + getManufacturer());
-		details.add("Model: " + getModel());
-		details.add("Product: " + getProduct());
-		details.add("Android Version: " + getVersion());
-		details.add("Version Release: " + getVersionRelease());
-		details.add("Build Display: " + getDisplay());
-		details.add("Build Time: " + getBuildTime());
-		details.add("Kernel Version: " + getKernelVersion());
-		details.add("Play Store Installed: " + isPlayStoreInstalled());
-		details.add("Google Maps Installed: " + isGoogleMapsInstalled());
-		details.add("Rooted: " + isDeviceRooted());
-		
+		try{
+			details.add("Manufacturer: " + getManufacturer());
+			details.add("Model: " + getModel());
+			details.add("Product: " + getProduct());
+			details.add("Android Version: " + getVersion());
+			details.add("Version Release: " + getVersionRelease());
+			details.add("Build Display: " + getDisplay());
+			details.add("Build Time: " + getBuildTime());
+			details.add("Kernel Version: " + getKernelVersion());
+			details.add("Play Store Installed: " + isPlayStoreInstalled());
+			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
+			details.add("Rooted: " + isDeviceRooted());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
-		
+
 	}
 
 
 	@Override
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
-		
+
 		ArrayList<String> details = new ArrayList<String>();
-		details.add("Board: " + getBoard());
-		details.add("Bootloader: " + getBootloader());
-		details.add("CPU_ABI: " + getCPU_ABI());
-		details.add("CPU_ABI2: " + getCPU_ABI2());
-		details.add("Device: " + getDevice());
-		details.add("Fingerprint: " + getFingerprint());
-		details.add("Hardware: " + getHardware());
-		details.add("Host: " + getHost());
-		details.add("ID: " + getID());
-		details.add("Radio (Baseband): " + getRadio());
-		details.add("Tags: " + getTags());
-		details.add("Type: " + getType());
-		details.add("Version Codename: " + getVersionCodename());
-		details.add("Version Incremental: " + getVersionIncremental());
-		details.add("Features: " + getAvailableFeatures());
-		
+		try{
+			details.add("Board: " + getBoard());
+			details.add("Bootloader: " + getBootloader());
+			details.add("CPU_ABI: " + getCPU_ABI());
+			details.add("CPU_ABI2: " + getCPU_ABI2());
+			details.add("Device: " + getDevice());
+			details.add("Fingerprint: " + getFingerprint());
+			details.add("Hardware: " + getHardware());
+			details.add("Host: " + getHost());
+			details.add("ID: " + getID());
+			details.add("Radio (Baseband): " + getRadio());
+			details.add("Tags: " + getTags());
+			details.add("Type: " + getType());
+			details.add("Version Codename: " + getVersionCodename());
+			details.add("Version Incremental: " + getVersionIncremental());
+			details.add("Features: " + getAvailableFeatures());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
+
 		return phoneDetails;
-		
+
 	}
 
 

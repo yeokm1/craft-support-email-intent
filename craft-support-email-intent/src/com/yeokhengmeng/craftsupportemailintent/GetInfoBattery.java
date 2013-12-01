@@ -13,9 +13,9 @@ public class GetInfoBattery extends GetInfoAbstract {
 
 	public static final String PERMISSION_BATTERY_STATE = permission.BATTERY_STATS;
 	private Intent batteryIntent;
-	
+
 	private BroadcastReceiver receiver = null;
-	
+
 	public GetInfoBattery(Context context) {
 		super(context);
 		if(checkPermission(PERMISSION_BATTERY_STATE)){
@@ -24,29 +24,29 @@ public class GetInfoBattery extends GetInfoAbstract {
 			unregisterReceiver();
 		}
 	}
-	
+
 
 	public boolean isBatteryExisting(){
 		if(batteryIntent == null){
 			return false;
 		}
-		
+
 		boolean exist = batteryIntent.getBooleanExtra(BatteryManager.EXTRA_PRESENT, false);
 		return exist;
 	}
-	
+
 	public float getBatteryTemp(){
 		if(batteryIntent == null){
 			return -300;
 		}
-		
+
 		//As return value seems to be in integer form *10
 		float temp = (float) batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -3000);
-		
+
 		temp *= 0.1;
 		return temp;
 	}
-	
+
 	public String getBatteryTech(){
 		if(batteryIntent == null){
 			return UNKNOWN;
@@ -58,46 +58,46 @@ public class GetInfoBattery extends GetInfoAbstract {
 			return battTech;
 		}
 	}
-	
-	
+
+
 	public float getBatteryLevel() {
 		if(batteryIntent == null){
 			return -1.0f;
 		}
-		
-	    int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-	    int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-	    
-	    // Error checking that probably isn't needed but I added just in case.
-	    if(level == -1 || scale == -1) {
-	        return -1.0f;
-	    }
 
-	    return ((float)level / (float)scale) * 100.0f; 
+		int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+		int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+
+		// Error checking that probably isn't needed but I added just in case.
+		if(level == -1 || scale == -1) {
+			return -1.0f;
+		}
+
+		return ((float)level / (float)scale) * 100.0f; 
 	}
-	
+
 	public String getBatteryStatus(){
 		if(batteryIntent == null){
 			return NO_PERMISSION;
 		}
 		int status = batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 		switch(status){
-			case BatteryManager.BATTERY_STATUS_CHARGING : return "Charging";
-			case BatteryManager.BATTERY_STATUS_DISCHARGING : return "Discharging";
-			case BatteryManager.BATTERY_STATUS_FULL : return "Battery Full";
-			case BatteryManager.BATTERY_STATUS_NOT_CHARGING : return "Not Charging";
-			case BatteryManager.BATTERY_STATUS_UNKNOWN : 
-				//Fallthrough
-			default: 
-				return UNKNOWN;
+		case BatteryManager.BATTERY_STATUS_CHARGING : return "Charging";
+		case BatteryManager.BATTERY_STATUS_DISCHARGING : return "Discharging";
+		case BatteryManager.BATTERY_STATUS_FULL : return "Battery Full";
+		case BatteryManager.BATTERY_STATUS_NOT_CHARGING : return "Not Charging";
+		case BatteryManager.BATTERY_STATUS_UNKNOWN : 
+			//Fallthrough
+		default: 
+			return UNKNOWN;
 		}
 	}
-	
+
 	public String getBatteryPlugged(){
 		if(batteryIntent == null){
 			return NO_PERMISSION;
 		}
-		
+
 		int plugged = batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
 		switch(plugged){
 		case BatteryManager.BATTERY_PLUGGED_AC : return "AC";
@@ -106,7 +106,7 @@ public class GetInfoBattery extends GetInfoAbstract {
 		default: return UNKNOWN;
 		}
 	}
-	
+
 	public String getBatteryHealth(){
 		if(batteryIntent == null){
 			return NO_PERMISSION;
@@ -122,7 +122,7 @@ public class GetInfoBattery extends GetInfoAbstract {
 		case BatteryManager.BATTERY_HEALTH_UNKNOWN : 
 			//Fallthrough
 		default: 
-				return UNKNOWN;
+			return UNKNOWN;
 		}
 	}
 
@@ -130,21 +130,24 @@ public class GetInfoBattery extends GetInfoAbstract {
 	@Override
 	public String getBasicDetailsOnly() {
 		String phoneDetails = "<<Battery>>\n";
-		
-		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Access Battery State Permission: " + checkPermission(PERMISSION_BATTERY_STATE));
-		details.add("Exists: " + isBatteryExisting());
-		details.add("Level: " + getBatteryLevel() + "%");
-		details.add("Status: " + getBatteryStatus());
-		details.add("Plugged: " + getBatteryPlugged());
 
-		
+		ArrayList<String> details = new ArrayList<String>();
+
+		try{
+			details.add("Access Battery State Permission: " + checkPermission(PERMISSION_BATTERY_STATE));
+			details.add("Exists: " + isBatteryExisting());
+			details.add("Level: " + getBatteryLevel() + "%");
+			details.add("Status: " + getBatteryStatus());
+			details.add("Plugged: " + getBatteryPlugged());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
+
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-		
-	
+
+
 		return phoneDetails;
 	}
 
@@ -153,28 +156,31 @@ public class GetInfoBattery extends GetInfoAbstract {
 	public String getAllDetails() {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
-		
-		details.add("Temperature: " + getBatteryTemp() + "C");
-		details.add("Tech: " + getBatteryTech());
-		details.add("Health: " + getBatteryHealth());
-		
-		
+
+		try{
+			details.add("Temperature: " + getBatteryTemp() + "C");
+			details.add("Tech: " + getBatteryTech());
+			details.add("Health: " + getBatteryHealth());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
+
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-	
-		
+
+
 		return phoneDetails;
 	}
-	
+
 	public class BattReceiver extends BroadcastReceiver {
-		
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			//Do nothing
 		}
 	}
-	
+
 	private void unregisterReceiver(){
 		if(receiver != null){
 			context.unregisterReceiver(receiver);
