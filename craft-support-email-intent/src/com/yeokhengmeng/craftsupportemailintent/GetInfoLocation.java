@@ -118,6 +118,7 @@ public class GetInfoLocation extends GetInfoAbstract {
 		
 		ArrayList<String> details = new ArrayList<String>();
 		
+		details.add("Access Fine Location Permission: " + checkPermission(PERMISSION_ACCESS_FINE_LOCATION));
 		details.add("GPS exists: " + doesGPSExist());
 		details.add("Network exists: " + doesNetworkExist());
 		

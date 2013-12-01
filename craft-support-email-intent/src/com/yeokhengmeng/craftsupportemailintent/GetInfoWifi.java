@@ -178,7 +178,8 @@ public class GetInfoWifi extends GetInfoAbstract{
 		String phoneDetails = "<<Wifi>>\n";
 
 		ArrayList<String> details = new ArrayList<String>();
-
+		
+		details.add("Access Wifi State Permission: " + checkPermission(PERMISSION_ACCESS_WIFI_STATE));
 		details.add("Exists: " + isWifiSupported());
 		details.add("Status: " + getWifiStatus());
 

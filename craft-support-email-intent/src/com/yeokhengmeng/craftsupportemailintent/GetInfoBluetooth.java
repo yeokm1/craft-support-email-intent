@@ -83,6 +83,7 @@ public class GetInfoBluetooth extends GetInfoAbstract{
 		
 		ArrayList<String> details = new ArrayList<String>();
 		
+		details.add("Access Bluetooth State Permission: " + checkPermission(PERMISSION_ACCESS_BLUETOOTH_STATE));
 		details.add("Exists: " + isBluetoothSupported());
 		details.add("BLE: " + isBluetoothLowEnergySupported());
 		details.add("Enabled: " + isBluetoothEnabled());

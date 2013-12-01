@@ -99,6 +99,7 @@ public class GetInfoCarrier extends GetInfoAbstract {
 		
 		ArrayList<String> details = new ArrayList<String>();
 		
+		details.add("Access Phone State Permission: " + checkPermission(PERMISSION_READ_PHONE_STATE));
 		details.add("Data State: " + getDataState());
 		details.add("Phone Type: " + getPhoneType());
 		

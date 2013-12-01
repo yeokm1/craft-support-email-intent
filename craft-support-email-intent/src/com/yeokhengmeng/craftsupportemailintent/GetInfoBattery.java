@@ -128,6 +128,7 @@ public class GetInfoBattery extends GetInfoAbstract {
 		
 		ArrayList<String> details = new ArrayList<String>();
 		
+		details.add("Access Battery State Permission: " + checkPermission(PERMISSION_BATTERY_STATE));
 		details.add("Exists: " + isBatteryExisting());
 		details.add("Level: " + getBatteryLevel() + "%");
 		details.add("Status: " + getBatteryStatus());
