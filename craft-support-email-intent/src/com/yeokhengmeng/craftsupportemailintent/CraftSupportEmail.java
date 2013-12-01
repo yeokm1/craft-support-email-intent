@@ -39,8 +39,12 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		getInfos.add(new GetInfoBattery(context));
 	}
 	
+	public void appendMinimalDetailsToContent(){
+		appendContent(getMinimalDetails());
+	}
+	
 	public void appendMinimumDetailsToContent(){
-		appendContent(getMinimumSummary());
+		appendContent(getMinimumDetails());
 	}
 
 	public void appendBasicDetailsToContent(){
@@ -51,9 +55,14 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		appendContent(getAllDetails());
 	}
 	
-	public String getMinimumSummary(){
+	public String getMinimumDetails(){
 		GetInfoSummary summ = new GetInfoSummary(context);
 		return summ.getMinimumDetails();
+	}
+	
+	public String getMinimalDetails(){
+		GetInfoSummary summ = new GetInfoSummary(context);
+		return summ.getMinimalDetails();
 	}
 
 	public String getBasicDetails(){

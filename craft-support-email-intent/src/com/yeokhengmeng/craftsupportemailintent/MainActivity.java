@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 	
 	public void minData(View view){
 		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-		String text = gatherer.getMinimumSummary();
+		String text = gatherer.getMinimumDetails();
 		outputView.setText(text);;
 	}
 

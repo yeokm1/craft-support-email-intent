@@ -279,6 +279,26 @@ public class GetInfoSummary extends GetInfoAbstract {
 			details.add("Product: " + getProduct());
 			details.add("Android Version: " + getVersion());
 			details.add("Version Release: " + getVersionRelease());
+		} catch (Exception e){
+			details.add(e.toString());
+		}
+		for(String detail : details){
+			phoneDetails += detail + "\n";
+		}
+
+		return phoneDetails;
+	}
+	
+	public String getMinimalDetails(){
+		String phoneDetails = "<<Phone Summary>>\n";
+		ArrayList<String> details = new ArrayList<String>();
+		try{
+
+			details.add("Manufacturer: " + getManufacturer());
+			details.add("Model: " + getModel());
+			details.add("Product: " + getProduct());
+			details.add("Android Version: " + getVersion());
+			details.add("Version Release: " + getVersionRelease());
 			details.add("Play Store Installed: " + isPlayStoreInstalled());
 			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
 			details.add("Rooted: " + isDeviceRooted());
@@ -290,6 +310,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 		}
 
 		return phoneDetails;
+		
 	}
 
 	@Override
