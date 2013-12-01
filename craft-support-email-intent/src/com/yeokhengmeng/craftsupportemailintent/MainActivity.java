@@ -1,8 +1,11 @@
 package com.yeokhengmeng.craftsupportemailintent;
 
+import com.lamerman.FileDialog;
+import com.lamerman.SelectionMode;
 import com.yeokhengmeng.craftsupportemailintent.R;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.method.ScrollingMovementMethod;
@@ -20,6 +23,9 @@ public class MainActivity extends Activity {
 	CraftSupportEmail gatherer;
 	EditText email;
 	EditText subject;
+	TextView filePathView;
+
+	private final int FILE_DIALOG_RESULT = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +34,8 @@ public class MainActivity extends Activity {
 		outputView = (TextView) findViewById(R.id.output_view);
 		email = (EditText) findViewById(R.id.email_to);
 		subject = (EditText) findViewById(R.id.subject);
-
-
+		filePathView = (TextView) findViewById(R.id.file_path);
+		filePathView.setMovementMethod(new ScrollingMovementMethod());
 		gatherer = new CraftSupportEmail(this);
 
 		outputView.setMovementMethod(new ScrollingMovementMethod());
@@ -53,6 +59,40 @@ public class MainActivity extends Activity {
 		outputView.setText(text);
 	}
 
+
+	public void browse(View view){
+		Intent intent = new Intent(getBaseContext(), FileDialog.class);
+		intent.putExtra(FileDialog.START_PATH, Environment.getExternalStorageDirectory().getPath());
+
+		//can user select directories or not
+		intent.putExtra(FileDialog.CAN_SELECT_DIR, true);
+		intent.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
+
+		startActivityForResult(intent, FILE_DIALOG_RESULT);
+	}
+
+
+	public synchronized void onActivityResult(final int requestCode,
+			int resultCode, final Intent data) {
+
+		if (resultCode == Activity.RESULT_OK) {
+
+			if (requestCode == FILE_DIALOG_RESULT) {
+				String filePath = data.getStringExtra(FileDialog.RESULT_PATH);
+				setFilePathView(filePath);
+			}
+
+			//		} else if (resultCode == Activity.RESULT_CANCELED) {
+			//			showToast("no file selected");
+		}
+
+	}
+
+	public void setFilePathView(String filePath){
+		filePathView = (TextView) findViewById(R.id.file_path);
+		filePathView.setText(filePath);
+	}
+
 	public void composeBasicEmail(View view){
 		gatherer.appendContent(gatherer.getAllDetails());
 
@@ -60,6 +100,12 @@ public class MainActivity extends Activity {
 			gatherer.addRecipientTo(email.getText().toString());
 			gatherer.appendContent(gatherer.getBasicDetails());
 			gatherer.appendSubject(subject.getText().toString());
+
+			String filePath = filePathView.getText().toString();
+
+			if(filePath != null || filePath != ""){
+				gatherer.addAttachment(filePath);
+			}
 			Intent intent = gatherer.generateEmailIntent();
 			gatherer.sendIntent(this, intent);
 		} catch ( IllegalArgumentException e){
@@ -69,18 +115,23 @@ public class MainActivity extends Activity {
 	}
 
 	public void composeAllEmail(View view){
-		
+
 
 		try{
 			gatherer.addRecipientTo(email.getText().toString());
 			gatherer.appendContent(gatherer.getAllDetails());
 			gatherer.appendSubject(subject.getText().toString());
+
+			String filePath = filePathView.getText().toString();
+			if(filePath != null || filePath != ""){
+				gatherer.addAttachment(filePath);
+			}
 			Intent intent = gatherer.generateEmailIntent();
 			gatherer.sendIntent(this, intent);
 		} catch ( IllegalArgumentException e){
 			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
 		}
-		
+
 	}
 
 }

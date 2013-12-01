@@ -1,12 +1,15 @@
 package com.yeokhengmeng.craftsupportemailintent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 
 public class CraftIntentEmail {
 
@@ -16,7 +19,8 @@ public class CraftIntentEmail {
 	protected ArrayList<String> recipientsTo = new ArrayList<String>();
 	protected ArrayList<String> recipientsCC = new ArrayList<String>();
 	protected ArrayList<String> recipientsBCC = new ArrayList<String>();
-
+	
+	protected Uri attachmentUri = null;
 
 	protected Pattern VALID_EMAIL_ADDRESS_REGEX ;
 
@@ -131,6 +135,22 @@ public class CraftIntentEmail {
 			throw new IllegalArgumentException(EMPTY_FIELD);
 		}
 	}
+	
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD) 
+	//Seems to work for Gmail app only
+	public void addAttachment(String filePath){
+		if(isFieldValid(filePath)){
+			File fileIn = new File(filePath);
+			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
+				fileIn.setReadable(true, false);
+			}
+	        Uri u = Uri.fromFile(fileIn);
+	        attachmentUri = u;
+		} else {
+			throw new IllegalArgumentException(EMPTY_FIELD);
+		}
+
+	}
 
 
 	protected boolean isFieldValid(String field){
@@ -187,6 +207,9 @@ public class CraftIntentEmail {
 		}
 		
 	
+		if(attachmentUri != null){
+			intent.putExtra(Intent.EXTRA_STREAM, attachmentUri);
+		}
 		return intent;
 	}
 	

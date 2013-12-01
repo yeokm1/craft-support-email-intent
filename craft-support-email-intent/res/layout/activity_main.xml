@@ -15,7 +15,7 @@
         android:layout_above="@+id/email_to"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/button5"
         android:scrollbars="vertical"
         android:text="Nothing yet" />
 
@@ -61,15 +61,28 @@
         android:text="Basic Data" />
 
     <EditText
+        android:id="@+id/file_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/output_view"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button5"
+        android:ems="10"
+        android:hint="Attachment Path"
+        android:scrollbars="vertical" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
         android:id="@+id/email_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/subject"
-        android:layout_alignLeft="@+id/output_view"
-        android:layout_alignRight="@+id/output_view"
+        android:layout_above="@+id/button2"
+        android:layout_toLeftOf="@+id/button2"
         android:ems="10"
-        android:hint="Recipient email"
         android:focusable="true"
+        android:hint="Email to"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -77,13 +90,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button2"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/button1"
         android:ems="10"
         android:focusable="false"
-        android:hint="Subject" >
+        android:hint="Subject" />
 
-        <requestFocus />
-    </EditText>
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/file_path"
+        android:layout_alignRight="@+id/output_view"
+        android:onClick="browse"
+        android:text="Browse" />
 
 </RelativeLayout>
