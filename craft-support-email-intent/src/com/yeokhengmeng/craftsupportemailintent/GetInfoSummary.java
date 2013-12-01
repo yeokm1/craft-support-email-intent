@@ -268,6 +268,26 @@ public class GetInfoSummary extends GetInfoAbstract {
 		}
 	}
 
+	
+	public String getMinimumDetails(){
+		String phoneDetails = "<<Phone Summary>>\n";
+		
+		ArrayList<String> details = new ArrayList<String>();
+		details.add("Manufacturer: " + getManufacturer());
+		details.add("Model: " + getModel());
+		details.add("Product: " + getProduct());
+		details.add("Android Version: " + getVersion());
+		details.add("Version Release: " + getVersionRelease());
+		details.add("Play Store Installed: " + isPlayStoreInstalled());
+		details.add("Google Maps Installed: " + isGoogleMapsInstalled());
+		details.add("Rooted: " + isDeviceRooted());
+		
+		for(String detail : details){
+			phoneDetails += detail + "\n";
+		}
+		
+		return phoneDetails;
+	}
 
 	@Override
 	public String getBasicDetailsOnly() {

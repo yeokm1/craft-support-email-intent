@@ -8,10 +8,13 @@ public class CraftSupportEmail extends CraftIntentEmail {
 
 
 	private ArrayList<GetInfoAbstract> getInfos = new ArrayList<GetInfoAbstract>();
+	
+	private Context context;
 
 
 	public CraftSupportEmail(Context context){
 		super(context);
+		this.context = context;
 		initAllGetInfos(context);
 	}
 
@@ -34,6 +37,10 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		getInfos.add(new GetInfoCarrier(context));
 		getInfos.add(new GetInfoBattery(context));
 	}
+	
+	public void appendMinimumDetailsToContent(){
+		appendContent(getMinimumSummary());
+	}
 
 	public void appendBasicDetailsToContent(){
 		appendContent(getBasicDetails());
@@ -41,6 +48,11 @@ public class CraftSupportEmail extends CraftIntentEmail {
 
 	public void appendAllDetailsToContent(){
 		appendContent(getAllDetails());
+	}
+	
+	public String getMinimumSummary(){
+		GetInfoSummary summ = new GetInfoSummary(context);
+		return summ.getMinimumDetails();
 	}
 
 	public String getBasicDetails(){

@@ -48,6 +48,12 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	public void minData(View view){
+		CraftSupportEmail gatherer = new CraftSupportEmail(this);
+		String text = gatherer.getMinimumSummary();
+		outputView.setText(text);;
+	}
 
 	public void basicData(View view){
 		CraftSupportEmail gatherer = new CraftSupportEmail(this);
