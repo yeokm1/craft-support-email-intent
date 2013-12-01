@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.annotation.TargetApi;
@@ -63,6 +64,16 @@ public class GetInfoSummary extends GetInfoAbstract {
 
 	public String getFingerprint(){
 		return android.os.Build.FINGERPRINT;
+	}
+	
+	public String getDisplay(){
+		return android.os.Build.DISPLAY;
+	}
+	
+	public String getBuildTime(){
+		long date = android.os.Build.TIME;
+		Date dateFormat = new Date(date);
+		return dateFormat.toString();
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -247,6 +258,15 @@ public class GetInfoSummary extends GetInfoAbstract {
 			return fullResponse;
 		}
 	}
+	
+	public String getKernelVersion(){
+		String kernelVersion = System.getProperty("os.version");
+		if(kernelVersion == null){
+			return UNKNOWN;
+		} else {
+			return kernelVersion;
+		}
+	}
 
 
 	@Override
@@ -261,6 +281,9 @@ public class GetInfoSummary extends GetInfoAbstract {
 		details.add("Product: " + getProduct());
 		details.add("Android Version: " + getVersion());
 		details.add("Version Release: " + getVersionRelease());
+		details.add("Build Display: " + getDisplay());
+		details.add("Build Time: " + getBuildTime());
+		details.add("Kernel Version: " + getKernelVersion());
 		details.add("Play Store Installed: " + isPlayStoreInstalled());
 		details.add("Google Maps Installed: " + isGoogleMapsInstalled());
 		details.add("Rooted: " + isDeviceRooted());
@@ -288,7 +311,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 		details.add("Hardware: " + getHardware());
 		details.add("Host: " + getHost());
 		details.add("ID: " + getID());
-		details.add("Radio: " + getRadio());
+		details.add("Radio (Baseband): " + getRadio());
 		details.add("Tags: " + getTags());
 		details.add("Type: " + getType());
 		details.add("Version Codename: " + getVersionCodename());
