@@ -12,6 +12,8 @@ import android.os.BatteryManager;
 public class GetInfoBattery extends GetInfoAbstract {
 
 	public static final String PERMISSION_BATTERY_STATE = permission.BATTERY_STATS;
+	public static final int DEFAULT_BATTERY_TEMP = -2732;
+	
 	private Intent batteryIntent;
 
 	private BroadcastReceiver receiver = null;
@@ -35,15 +37,15 @@ public class GetInfoBattery extends GetInfoAbstract {
 		return exist;
 	}
 
-	public float getBatteryTemp(){
+	public int getBatteryTemp(){
 		if(batteryIntent == null){
-			return -273.15f;
+			return DEFAULT_BATTERY_TEMP;
 		}
 
 		//As return value seems to be in integer form *10
-		float temp = (float) batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -2732);
+		int temp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, DEFAULT_BATTERY_TEMP);
 
-		temp *= 0.1;
+
 		return temp;
 	}
 
@@ -157,8 +159,10 @@ public class GetInfoBattery extends GetInfoAbstract {
 		String phoneDetails = getBasicDetailsOnly();
 		ArrayList<String> details = new ArrayList<String>();
 
+		
+		float actualTemperature = ((float) getBatteryTemp()) * 0.1f;
 		try{
-			details.add("Temperature: " + getBatteryTemp() + "C");
+			details.add("Temperature: " + String.format("%.1f", actualTemperature) + "C");
 			details.add("Tech: " + getBatteryTech());
 			details.add("Health: " + getBatteryHealth());
 		} catch (Exception e){
