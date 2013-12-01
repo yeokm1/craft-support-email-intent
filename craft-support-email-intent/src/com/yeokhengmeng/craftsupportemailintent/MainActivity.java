@@ -20,9 +20,9 @@ public class MainActivity extends Activity {
 
 
 	TextView outputView;
-	
+
 	EditText email;
-	EditText subject;
+	EditText subjectView;
 	TextView filePathView;
 
 	private final int FILE_DIALOG_RESULT = 1;
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		outputView = (TextView) findViewById(R.id.output_view);
 		email = (EditText) findViewById(R.id.email_to);
-		subject = (EditText) findViewById(R.id.subject);
+		subjectView = (EditText) findViewById(R.id.subject);
 		filePathView = (TextView) findViewById(R.id.file_path);
 		filePathView.setMovementMethod(new ScrollingMovementMethod());
 
@@ -94,70 +94,79 @@ public class MainActivity extends Activity {
 		filePathView = (TextView) findViewById(R.id.file_path);
 		filePathView.setText(filePath);
 	}
-	
+
 	public void composeEmail(View view){
-	CraftSupportEmail gatherer = new CraftSupportEmail(this);
+		CraftSupportEmail gatherer = new CraftSupportEmail(this);
 
-	try{
-		gatherer.addRecipientTo(email.getText().toString());
-		gatherer.appendSubject(subject.getText().toString());
-		
-		gatherer.appendContent(outputView.getText().toString());
+		try{
+			gatherer.addRecipientTo(email.getText().toString());
+			
+			
+			String subjectText = subjectView.getText().toString();
+			if(subjectText != null && (subjectText.length() != 0)){
+				gatherer.appendContent(subjectText);
+			}
 
-		String filePath = filePathView.getText().toString();
 
-		if(filePath != null && (filePath.length() != 0)){
-			gatherer.addAttachment(filePath);
+			String content = outputView.getText().toString();
+			if(content != null && (content.length() != 0)){
+				gatherer.appendContent(outputView.getText().toString());
+			}
+
+			String filePath = filePathView.getText().toString();
+
+			if(filePath != null && (filePath.length() != 0)){
+				gatherer.addAttachment(filePath);
+			}
+			Intent intent = gatherer.generateEmailIntent();
+			gatherer.sendIntent(this, intent);
+		} catch ( IllegalArgumentException e){
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
-		Intent intent = gatherer.generateEmailIntent();
-		gatherer.sendIntent(this, intent);
-	} catch ( IllegalArgumentException e){
-		Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+
 	}
 
-}
-
-//	public void composeBasicEmail(View view){
-//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-//		gatherer.appendContent(gatherer.getAllDetails());
-//
-//		try{
-//			gatherer.addRecipientTo(email.getText().toString());
-//			gatherer.appendContent(gatherer.getBasicDetails());
-//			gatherer.appendSubject(subject.getText().toString());
-//
-//			String filePath = filePathView.getText().toString();
-//
-//			if(filePath != null || filePath != ""){
-//				gatherer.addAttachment(filePath);
-//			}
-//			Intent intent = gatherer.generateEmailIntent();
-//			gatherer.sendIntent(this, intent);
-//		} catch ( IllegalArgumentException e){
-//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
-//		}
-//
-//	}
-//
-//	public void composeAllEmail(View view){
-//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-//
-//
-//		try{
-//			gatherer.addRecipientTo(email.getText().toString());
-//			gatherer.appendContent(gatherer.getAllDetails());
-//			gatherer.appendSubject(subject.getText().toString());
-//
-//			String filePath = filePathView.getText().toString();
-//			if(filePath != null || filePath != ""){
-//				gatherer.addAttachment(filePath);
-//			}
-//			Intent intent = gatherer.generateEmailIntent();
-//			gatherer.sendIntent(this, intent);
-//		} catch ( IllegalArgumentException e){
-//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
-//		}
-//
-//	}
+	//	public void composeBasicEmail(View view){
+	//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
+	//		gatherer.appendContent(gatherer.getAllDetails());
+	//
+	//		try{
+	//			gatherer.addRecipientTo(email.getText().toString());
+	//			gatherer.appendContent(gatherer.getBasicDetails());
+	//			gatherer.appendSubject(subject.getText().toString());
+	//
+	//			String filePath = filePathView.getText().toString();
+	//
+	//			if(filePath != null || filePath != ""){
+	//				gatherer.addAttachment(filePath);
+	//			}
+	//			Intent intent = gatherer.generateEmailIntent();
+	//			gatherer.sendIntent(this, intent);
+	//		} catch ( IllegalArgumentException e){
+	//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+	//		}
+	//
+	//	}
+	//
+	//	public void composeAllEmail(View view){
+	//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
+	//
+	//
+	//		try{
+	//			gatherer.addRecipientTo(email.getText().toString());
+	//			gatherer.appendContent(gatherer.getAllDetails());
+	//			gatherer.appendSubject(subject.getText().toString());
+	//
+	//			String filePath = filePathView.getText().toString();
+	//			if(filePath != null || filePath != ""){
+	//				gatherer.addAttachment(filePath);
+	//			}
+	//			Intent intent = gatherer.generateEmailIntent();
+	//			gatherer.sendIntent(this, intent);
+	//		} catch ( IllegalArgumentException e){
+	//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+	//		}
+	//
+	//	}
 
 }

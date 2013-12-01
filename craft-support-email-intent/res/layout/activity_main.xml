@@ -17,6 +17,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/button5"
         android:hint="Email Content"
+        android:gravity="top"
         android:scrollbars="vertical" />
 
     <Button
@@ -92,7 +93,6 @@
         android:layout_alignLeft="@+id/button2"
         android:layout_alignParentRight="true"
         android:ems="10"
-        android:focusable="false"
         android:hint="Subject" />
 
 </RelativeLayout>

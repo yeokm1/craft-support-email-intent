@@ -26,6 +26,7 @@ public class CraftIntentEmail {
 
 
 	protected final String INVALID_EMAIL = "Invalid email";
+	protected final String INVALID_FILE = "Invalid file";
 	protected final String INVALID_EMAIL_OR_EMPTY_FIELD = "Invalid email or empty field";
 	protected final String EMPTY_FIELD = "Empty field";
 
@@ -138,12 +139,15 @@ public class CraftIntentEmail {
 	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD) 
 	//Seems to work for Gmail app only
-	public void addAttachment(String filePath){
+	public void addAttachment(String filePath) throws IllegalArgumentException{
 		if(isFieldValid(filePath)){
 			File fileIn = new File(filePath);
-			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
-				fileIn.setReadable(true, false);
+			if(!fileIn.canRead()){
+				throw new IllegalArgumentException(INVALID_FILE);
 			}
+//			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD){
+//				fileIn.setReadable(true, false);
+//			}
 	        Uri u = Uri.fromFile(fileIn);
 	        attachmentUri = u;
 		} else {
@@ -154,7 +158,7 @@ public class CraftIntentEmail {
 
 
 	protected boolean isFieldValid(String field){
-		if(field == null || field.length() != 0){
+		if(field == null || field.length() == 0){
 			return false;
 		} else {
 			return true;
