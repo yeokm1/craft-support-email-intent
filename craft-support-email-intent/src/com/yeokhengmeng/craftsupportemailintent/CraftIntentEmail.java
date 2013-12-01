@@ -154,7 +154,7 @@ public class CraftIntentEmail {
 
 
 	protected boolean isFieldValid(String field){
-		if(field == null || field == ""){
+		if(field == null || field.length() != 0){
 			return false;
 		} else {
 			return true;
