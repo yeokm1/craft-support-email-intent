@@ -3,6 +3,7 @@ package com.yeokhengmeng.craftsupportemailintent;
 import java.util.ArrayList;
 
 import android.Manifest.permission;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,10 +14,14 @@ public class GetInfoBattery extends GetInfoAbstract {
 	public static final String PERMISSION_BATTERY_STATE = permission.BATTERY_STATS;
 	private Intent batteryIntent;
 	
+	private BroadcastReceiver receiver = null;
+	
 	public GetInfoBattery(Context context) {
 		super(context);
 		if(checkPermission(PERMISSION_BATTERY_STATE)){
-			batteryIntent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+			receiver = new BattReceiver();
+			batteryIntent = context.registerReceiver(receiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+			unregisterReceiver();
 		}
 	}
 	
@@ -139,6 +144,7 @@ public class GetInfoBattery extends GetInfoAbstract {
 			phoneDetails += detail + "\n";
 		}
 		
+	
 		return phoneDetails;
 	}
 
@@ -156,8 +162,24 @@ public class GetInfoBattery extends GetInfoAbstract {
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
+	
 		
 		return phoneDetails;
+	}
+	
+	public class BattReceiver extends BroadcastReceiver {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			//Do nothing
+		}
+	}
+	
+	private void unregisterReceiver(){
+		if(receiver != null){
+			context.unregisterReceiver(receiver);
+			receiver = null;
+		}
 	}
 
 }
