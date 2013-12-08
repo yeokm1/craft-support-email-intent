@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
 			
 			String subjectText = subjectView.getText().toString();
 			if(subjectText != null && (subjectText.length() != 0)){
-				gatherer.appendContent(subjectText);
+				gatherer.appendSubject(subjectText);
 			}
 
 
