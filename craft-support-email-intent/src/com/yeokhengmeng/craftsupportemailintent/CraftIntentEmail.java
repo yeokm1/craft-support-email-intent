@@ -137,6 +137,13 @@ public class CraftIntentEmail {
 		}
 	}
 	
+	public void addAttachment(Uri uri){
+		if(uri == null){
+			throw new IllegalArgumentException();
+		}
+		attachmentUri = uri;
+	}
+	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD) 
 	//Seems to work for Gmail app only
 	public void addAttachment(String filePath) throws IllegalArgumentException{
@@ -149,7 +156,7 @@ public class CraftIntentEmail {
 //				fileIn.setReadable(true, false);
 //			}
 	        Uri u = Uri.fromFile(fileIn);
-	        attachmentUri = u;
+	        addAttachment(u);
 		} else {
 			throw new IllegalArgumentException(EMPTY_FIELD);
 		}
