@@ -1,7 +1,7 @@
-Craft--Support--Email-Intents
+Craft (Support) Email Intents
 =============================
 
-An Android library project that enables developers to create email intents easily. Also includes feature to retrieve phone's details for debugging purposes.
+An Android library that enables developers to create email intents easily. Also includes feature to retrieve phone's details for debugging purposes.
 
 <b>Why?</b><br>
 I needed a nice abstraction for an Android app developer like myself to create and launch email intents from their app. Seeing as how no such abstraction exists, I decided to write one and open source this solution. This library also supports retrieving the phone's hardware/software details and include them in the email.
@@ -9,6 +9,21 @@ I needed a nice abstraction for an Android app developer like myself to create a
 <b>What can you do?</b><br>
 Before you begin playing with the JAR library, I suggest that you install the APK from the releases section and experiment. This tiny Android program wraps the library and shows what you can do with this library.
 
+![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Main+Page.png)
+
+Press the buttons to obtain what contents you want in the email
+
+![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Call+Intent.png)
+
+Press "Email This" to send generate and send the intent.
+
+![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Gmail+Main.png)
+
+Intent is received by the email application with the supplied details.
+
+![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Gmail+attachment.png)
+
+Attachment is included as well. (Only working for the Gmail app. The normal Email app does not process attachments)
 
 
 <b>Getting Started.</b><br>
@@ -43,12 +58,9 @@ boolean status = emailGen.sendIntent(context, intent);<b><br>
 3. Follow Step 3 in Getting Started.<br>
 
 
-<b>Customisation</b><br>
+<b>Retrieve phone's details</b><br>
 Instantiate the GetInfo...() classes directly. Play with public methods.
 
 
 The MIT License (MIT)<br>
 Copyright (c) 2013-2014 Yeo Kheng Meng<br>
-
-
-
