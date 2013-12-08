@@ -325,12 +325,12 @@ public class GetInfoSummary extends GetInfoAbstract {
 			details.add("Product: " + getProduct());
 			details.add("Android Version: " + getVersion());
 			details.add("Version Release: " + getVersionRelease());
-			details.add("Build Display: " + getDisplay());
-			details.add("Build Time: " + getBuildTime());
-			details.add("Kernel Version: " + getKernelVersion());
 			details.add("Play Store Installed: " + isPlayStoreInstalled());
 			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
 			details.add("Rooted: " + isDeviceRooted());
+			details.add("Build Display: " + getDisplay());
+			details.add("Build Time: " + getBuildTime());
+			details.add("Kernel Version: " + getKernelVersion());
 		} catch (Exception e){
 			details.add(e.toString());
 		}

@@ -14,10 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/email_to"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/button5"
         android:layout_below="@+id/button5"
-        android:hint="Email Content"
         android:gravity="top"
+        android:hint="Email Content"
         android:scrollbars="vertical" />
 
     <Button
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button2"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_toRightOf="@+id/email_to"
         android:ems="10"
         android:hint="Subj" />
 
@@ -69,23 +69,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button6"
-        android:layout_alignLeft="@+id/button5"
         android:layout_alignRight="@+id/output_view"
         android:layout_alignTop="@+id/button1"
         android:onClick="allData"
         android:text="All" />
-
-    <EditText
-        android:id="@+id/email_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/subject"
-        android:layout_alignLeft="@+id/output_view"
-        android:layout_toLeftOf="@+id/button2"
-        android:ems="10"
-        android:focusable="true"
-        android:hint="Email to"
-        android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/button3"
@@ -93,18 +80,39 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button6"
         android:layout_alignLeft="@+id/email_to"
-        android:onClick="minData"
-        android:text="Min Info" />
+        android:onClick="minimumData"
+        android:text="Min" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button6"
-        android:layout_alignRight="@+id/email_to"
         android:layout_alignTop="@+id/button3"
-        android:layout_toRightOf="@+id/button3"
+        android:layout_toLeftOf="@+id/button2"
+        android:layout_toRightOf="@+id/button4"
         android:onClick="basicData"
         android:text="Basic" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button6"
+        android:layout_toRightOf="@+id/button3"
+        android:onClick="minimalData"
+        android:text="Minimal" />
+
+    <EditText
+        android:id="@+id/email_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button3"
+        android:layout_alignLeft="@+id/output_view"
+        android:layout_alignRight="@+id/file_path"
+        android:ems="10"
+        android:focusable="true"
+        android:hint="Email to"
+        android:inputType="textEmailAddress" />
 
 </RelativeLayout>

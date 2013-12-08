@@ -49,9 +49,15 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void minData(View view){
+	public void minimumData(View view){
 		CraftSupportEmail gatherer = new CraftSupportEmail(this);
 		String text = gatherer.getMinimumDetails();
+		outputView.setText(text);;
+	}
+	
+	public void minimalData(View view){
+		CraftSupportEmail gatherer = new CraftSupportEmail(this);
+		String text = gatherer.getMinimalDetails();
 		outputView.setText(text);;
 	}
 
