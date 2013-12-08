@@ -15,6 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.util.Log;
 
@@ -268,6 +269,25 @@ public class GetInfoSummary extends GetInfoAbstract {
 		}
 	}
 
+	public String getPackageVersionAndName(){
+
+		PackageManager manager = context.getPackageManager();
+		String version = "<<App Version>>\n";
+		try{
+			PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+
+			version += "PackageName: " + info.packageName + "\n";
+			version += "VersionCode: " + info.versionCode +  "\n"; 
+			version += "VersionName: " + info.versionName + "\n";
+
+
+		} catch (NameNotFoundException e){
+			version = "Cannot find package\n";
+		}
+
+		return version;
+	}
+
 
 	public String getMinimumDetails(){
 		String phoneDetails = "<<Phone Summary>>\n";
@@ -288,7 +308,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 
 		return phoneDetails;
 	}
-	
+
 	public String getMinimalDetails(){
 		String phoneDetails = "<<Phone Summary>>\n";
 		ArrayList<String> details = new ArrayList<String>();
@@ -310,7 +330,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 		}
 
 		return phoneDetails;
-		
+
 	}
 
 	@Override
@@ -370,9 +390,8 @@ public class GetInfoSummary extends GetInfoAbstract {
 		for(String detail : details){
 			phoneDetails += detail + "\n";
 		}
-
+		
 		return phoneDetails;
-
 	}
 
 

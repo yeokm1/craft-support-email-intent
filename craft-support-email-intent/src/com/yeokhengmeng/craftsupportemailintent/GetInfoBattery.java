@@ -149,7 +149,6 @@ public class GetInfoBattery extends GetInfoAbstract {
 			phoneDetails += detail + "\n";
 		}
 
-
 		return phoneDetails;
 	}
 

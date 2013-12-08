@@ -44,9 +44,14 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public void appDetails(View view){
+		CraftSupportEmail gatherer = new CraftSupportEmail(this);
+		String text = gatherer.getAppDetails();
+		outputView.setText(text);
 	}
 	
 	public void minimumData(View view){
@@ -95,9 +100,6 @@ public class MainActivity extends Activity {
 				String filePath = data.getStringExtra(FileDialog.RESULT_PATH);
 				setFilePathView(filePath);
 			}
-
-			//		} else if (resultCode == Activity.RESULT_CANCELED) {
-			//			showToast("no file selected");
 		}
 
 	}
@@ -137,48 +139,5 @@ public class MainActivity extends Activity {
 		}
 
 	}
-
-	//	public void composeBasicEmail(View view){
-	//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-	//		gatherer.appendContent(gatherer.getAllDetails());
-	//
-	//		try{
-	//			gatherer.addRecipientTo(email.getText().toString());
-	//			gatherer.appendContent(gatherer.getBasicDetails());
-	//			gatherer.appendSubject(subject.getText().toString());
-	//
-	//			String filePath = filePathView.getText().toString();
-	//
-	//			if(filePath != null || filePath != ""){
-	//				gatherer.addAttachment(filePath);
-	//			}
-	//			Intent intent = gatherer.generateEmailIntent();
-	//			gatherer.sendIntent(this, intent);
-	//		} catch ( IllegalArgumentException e){
-	//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
-	//		}
-	//
-	//	}
-	//
-	//	public void composeAllEmail(View view){
-	//		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-	//
-	//
-	//		try{
-	//			gatherer.addRecipientTo(email.getText().toString());
-	//			gatherer.appendContent(gatherer.getAllDetails());
-	//			gatherer.appendSubject(subject.getText().toString());
-	//
-	//			String filePath = filePathView.getText().toString();
-	//			if(filePath != null || filePath != ""){
-	//				gatherer.addAttachment(filePath);
-	//			}
-	//			Intent intent = gatherer.generateEmailIntent();
-	//			gatherer.sendIntent(this, intent);
-	//		} catch ( IllegalArgumentException e){
-	//			Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
-	//		}
-	//
-	//	}
 
 }
