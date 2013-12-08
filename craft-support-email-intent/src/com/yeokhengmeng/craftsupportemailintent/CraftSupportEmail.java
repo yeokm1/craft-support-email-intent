@@ -39,6 +39,10 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		getInfos.add(new GetInfoBattery(context));
 	}
 	
+	public void appendAppDetailsToContent(){
+		appendContent(getAppDetails());
+	}
+	
 	public void appendMinimalDetailsToContent(){
 		appendContent(getMinimalDetails());
 	}
