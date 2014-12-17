@@ -45,15 +45,37 @@ public class GetInfoSummary extends GetInfoAbstract {
 	public String getBrand(){
 		return android.os.Build.BRAND;
 	}
-
-	public String getCPU_ABI(){
-		return android.os.Build.CPU_ABI;
+	
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private String getSupportedABIsString(){
+		String[] abis = android.os.Build.SUPPORTED_ABIS;
+		String result = "";
+		for(String abi : abis){
+			result += abi + " ";
+		}
+		return result;
 	}
 
-	@TargetApi(Build.VERSION_CODES.FROYO)
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP) 
+	@SuppressWarnings("deprecation")
+	public String getCPU_ABI(){
+		if(getVersion() >= android.os.Build.VERSION_CODES.LOLLIPOP){
+			return getSupportedABIsString();
+		} else {
+			return android.os.Build.CPU_ABI;
+		}
+
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP) 
+	@SuppressWarnings("deprecation")
 	public String getCPU_ABI2(){
 		if(getVersion() >= android.os.Build.VERSION_CODES.FROYO){
-			return android.os.Build.CPU_ABI2;
+			if(getVersion() >= android.os.Build.VERSION_CODES.LOLLIPOP){
+				return getSupportedABIsString();
+			} else {
+				return android.os.Build.CPU_ABI2;
+			}
 		} else {
 			return UNKNOWN;
 		}
