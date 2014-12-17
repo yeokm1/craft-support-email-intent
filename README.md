@@ -35,7 +35,7 @@ Attachment is included as well. (Only working for the Gmail app. The normal Emai
 
 2. Construct the email my adding information like To, CC, BCC, Subject and Content using the relevant public methods, add...(), remove...() and append...(). All methods will throw IllegalArgumentException if you pass null, empty or invalid emails as parameters. If you wish to change this behavoir, override the protected methods isFieldValid(String field) and isEmailValid(String emailStr).<br>
 
-3. This library only supports one attachment at the moment. Add an attachment by passing the file path or URI path to addAttachment(). According to my tests, this only works for the Gmail app and not the typical Email app. Calling addAttachement again will replace the path.<br>
+3. This library only supports one attachment at the moment. Add an attachment by passing the file path or URI path to addAttachment(). According to my tests, this only works for the Gmail app and not the typical Email app. Calling addAttachment again will replace the path.<br>
 
 4. Retrieve the Email Intent with the method generateEmailIntent(). Your can also use generateEmailIntentWithNewTaskFlag() where the intent will tell Android that when the user returns to your app, your app is displayed, instead of the email app. Modify this intent if you have to then send it with sendIntent(Context context, Intent intent).<br>
 
