@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 	
 	public void appDetails(View view){
 		CraftSupportEmail gatherer = new CraftSupportEmail(this);
-		String text = gatherer.getAppDetails();
+		String text = gatherer.getAppDetails(null);
 		outputView.setText(text);
 	}
 	

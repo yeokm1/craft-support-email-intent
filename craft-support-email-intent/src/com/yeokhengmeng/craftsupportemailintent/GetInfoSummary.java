@@ -5,9 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -290,8 +294,28 @@ public class GetInfoSummary extends GetInfoAbstract {
 			return kernelVersion;
 		}
 	}
+	
+	public String getCompileDateTime(DateFormat dateFormat){
+		
+		if(dateFormat == null){
+			dateFormat = SimpleDateFormat.getInstance();
+		}
+		
+        try{
+            ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0);
+            ZipFile zf = new ZipFile(ai.sourceDir);
+            ZipEntry ze = zf.getEntry("classes.dex");
+            long time = ze.getTime();
+            String s = dateFormat.format(new java.util.Date(time));
+            zf.close();
+            return s;
+        }catch(Exception e){
+        }
 
-	public String getPackageVersionAndName(){
+        return "";
+    }
+
+	public String getPackageVersionAndName(DateFormat dateFormat){
 
 		PackageManager manager = context.getPackageManager();
 		String version = "<<App Version>>\n";
@@ -301,6 +325,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 			version += "PackageName: " + info.packageName + "\n";
 			version += "VersionCode: " + info.versionCode +  "\n"; 
 			version += "VersionName: " + info.versionName + "\n";
+			version += "CompileDate: " + getCompileDateTime(dateFormat) + "\n";
 
 
 		} catch (NameNotFoundException e){

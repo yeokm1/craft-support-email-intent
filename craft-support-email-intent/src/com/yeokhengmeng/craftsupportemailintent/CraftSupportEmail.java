@@ -1,5 +1,6 @@
 package com.yeokhengmeng.craftsupportemailintent;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -39,8 +40,8 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		getInfos.add(new GetInfoBattery(context));
 	}
 	
-	public void appendAppDetailsToContent(){
-		appendContent(getAppDetails());
+	public void appendAppDetailsToContent(DateFormat dateFormatForCompileTime){
+		appendContent(getAppDetails(dateFormatForCompileTime));
 	}
 	
 	public void appendMinimalDetailsToContent(){
@@ -59,9 +60,9 @@ public class CraftSupportEmail extends CraftIntentEmail {
 		appendContent(getAllDetails());
 	}
 	
-	public String getAppDetails(){
+	public String getAppDetails(DateFormat dateFormatForCompileTime){
 		GetInfoSummary summ = new GetInfoSummary(context);
-		return summ.getPackageVersionAndName();
+		return summ.getPackageVersionAndName(null);
 	}
 	
 	public String getMinimumDetails(){
