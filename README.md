@@ -40,13 +40,13 @@ Attachment is included as well. (Only working for the Gmail app. The normal Emai
 4. Retrieve the Email Intent with the method generateEmailIntent(). Your can also use generateEmailIntentWithNewTaskFlag() where the intent will tell Android that when the user returns to your app, your app is displayed, instead of the email app. Modify this intent if you have to then send it with sendIntent(Context context, Intent intent).<br>
 
 
-eg.<br>
-<b>
-CraftSupportEmail emailGen = new CraftSupportEmail(context, email, subject);<br>
-emailGen.appendContent(myContent);<br>
-Intent intent = emailGen.generateIntentWithNewTaskFlag();<br>
-boolean status = emailGen.sendIntent(context, intent);<b><br>
-
+eg
+```
+CraftSupportEmail emailGen = new CraftSupportEmail(context, email, subject);
+emailGen.appendContent(myContent);
+Intent intent = emailGen.generateIntentWithNewTaskFlag();
+boolean status = emailGen.sendIntent(context, intent);
+```
 "status" returns true if there is an Email app available to receive the intent on the phone.
 
 <b>Retrieve and use the hardware/software detail dumps</b><br>
