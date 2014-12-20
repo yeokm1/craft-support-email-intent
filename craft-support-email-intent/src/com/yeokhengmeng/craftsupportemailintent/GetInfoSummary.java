@@ -162,7 +162,6 @@ public class GetInfoSummary extends GetInfoAbstract {
 		return android.os.Build.TYPE;
 	}
 
-
 	public String getVersionCodename(){
 		return android.os.Build.VERSION.CODENAME;
 	}
@@ -173,6 +172,11 @@ public class GetInfoSummary extends GetInfoAbstract {
 
 	public String getVersionRelease(){
 		return android.os.Build.VERSION.RELEASE;
+	}
+	
+	public boolean isArtInUse() {
+	    final String vmVersion = System.getProperty("java.vm.version");
+	    return vmVersion != null && vmVersion.startsWith("2");
 	}
 
 	public FeatureInfo[] getFeatureArray(){
@@ -346,6 +350,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 			details.add("Product: " + getProduct());
 			details.add("Android Version: " + getVersion());
 			details.add("Version Release: " + getVersionRelease());
+			details.add("ART in use: " + isArtInUse());
 		} catch (Exception e){
 			details.add(e.toString());
 		}
@@ -366,6 +371,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 			details.add("Product: " + getProduct());
 			details.add("Android Version: " + getVersion());
 			details.add("Version Release: " + getVersionRelease());
+			details.add("ART in use: " + isArtInUse());
 			details.add("Play Store Installed: " + isPlayStoreInstalled());
 			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
 			details.add("Rooted: " + isDeviceRooted());
@@ -392,6 +398,7 @@ public class GetInfoSummary extends GetInfoAbstract {
 			details.add("Product: " + getProduct());
 			details.add("Android Version: " + getVersion());
 			details.add("Version Release: " + getVersionRelease());
+			details.add("ART in use: " + isArtInUse());
 			details.add("Play Store Installed: " + isPlayStoreInstalled());
 			details.add("Google Maps Installed: " + isGoogleMapsInstalled());
 			details.add("Rooted: " + isDeviceRooted());
