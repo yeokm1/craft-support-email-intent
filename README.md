@@ -19,7 +19,7 @@ Press the buttons to obtain what contents you want in the email
 Press the buttons to obtain what contents you want in the email. Press "Email This" to send generate and send the intent.
 
 
-![Screen](/screenshots/enter-application.png)
+![Screen](/screenshots/email-application.png)
 
 Intent is received by the email application with the supplied details.
 
