@@ -9,19 +9,21 @@ I needed a nice abstraction for an Android app developer like myself to create a
 <b>What can you do?</b><br>
 Before you begin playing with the JAR library, I suggest that you install the APK from the releases section and experiment. This tiny Android program wraps the library and shows what you can do with this library.
 
-![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Main+Page.png)
+![Screen](/screenshots/details.png)
 
 Press the buttons to obtain what contents you want in the email
 
-![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Call+Intent.png)
 
-Press "Email This" to send generate and send the intent.
+![Screen](/screenshots/enter-email-details.png)
 
-![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Gmail+Main.png)
+Press the buttons to obtain what contents you want in the email. Press "Email This" to send generate and send the intent.
+
+
+![Screen](/screenshots/enter-application.png)
 
 Intent is received by the email application with the supplied details.
 
-![Screen](http://s3-ap-southeast-1.amazonaws.com/media.yeokhengmeng.com/screenshots/craft-support-email-intent/Gmail+attachment.png)
+
 
 Attachment is included as well. (Only working for the Gmail app. The normal Email app does not process attachments)
 
